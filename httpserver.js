@@ -29,33 +29,33 @@ function start_server(){
  	console.log(content_trunk);
 	console.log('--------Current Information end -------')
 
- // 	console.log('--------start server begin -------')
+ 	console.log('--------start server begin -------')
 
- // 	console.log('--------create http server -------')
- // 	http.createServer(function (request, response) {
- // 		  console.log('--------recevice request bengin -------')
- // 		  //console.log(request)
- // 		  console.log(request.url)
- // 		  console.log('--------recevice request end -------')
+ 	console.log('--------create http server -------')
+ 	http.createServer(function (request, response) {
+ 		  console.log('--------recevice request bengin -------')
+ 		  //console.log(request)
+ 		  console.log(request.url)
+ 		  console.log('--------recevice request end -------')
 
- // 		  const { headers, method, url } = request;
-	// 	  let body = [];
-	// 	  request.on('error', (err) => {
-	// 	    console.error(err);
-	// 	  }).on('data', (chunk) => {
-	// 	    body.push(chunk);
-	// 	  }).on('end', () => {
-	// 	    body = Buffer.concat(body).toString();
- // 			console.log('--------recevice body bengin -------')
-	// 	 	console.log(body);
- // 			console.log('--------recevice body end -------')
-	// 		response.writeHead(200, {'Content-Type': 'text/plain'});
-	// 		response.end(contentText);
-	// 	  });
-	// }).listen(port);
+ 		  const { headers, method, url } = request;
+		  let body = [];
+		  request.on('error', (err) => {
+		    console.error(err);
+		  }).on('data', (chunk) => {
+		    body.push(chunk);
+		  }).on('end', () => {
+		    body = Buffer.concat(body).toString();
+ 			console.log('--------recevice body bengin -------')
+		 	console.log(body);
+ 			console.log('--------recevice body end -------')
+			response.writeHead(200, {'Content-Type': 'text/plain'});
+			response.end(contentText);
+		  });
+	}).listen(port);
 
-	// console.log('--------create http server at http://127.0.0.1:8890/-------')
- // 	console.log('--------start server end -------')
+	console.log('--------create http server at http://127.0.0.1:8890/-------')
+ 	console.log('--------start server end -------')
 }
 
 
