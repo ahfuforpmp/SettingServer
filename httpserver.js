@@ -2,11 +2,29 @@
 var fs=require('fs');
 var http = require('http');
 
-var port = 8890;
+var port = 10001;
 var file= __dirname + "/main.json";
 var contentText = fs.readFileSync(file);
 var main_content =JSON.parse(contentText);
 var content_trunk = new Map();
+
+function handle_respone(request, response, port){
+	  console.log('--------recevice port %d-------', port)
+	  console.log(request.url)
+
+	  const { headers, method, url } = request;
+	  let body = [];
+	  request.on('error', (err) => {
+	    console.error(err);
+	  }).on('data', (chunk) => {
+	    body.push(chunk);
+	  }).on('end', () => {
+	    body = Buffer.concat(body).toString();
+	    console.log(body)
+		response.writeHead(200, {'Content-Type': 'text/plain'});
+		response.end(contentText);
+	  });
+}
 
 start_server()
  
@@ -26,36 +44,14 @@ function start_server(){
 		//console.log(trunk_content);
 		//console.log('--------end trunk %d-------', i)
  	}
- 	console.log(content_trunk);
+ 	//console.log(content_trunk);
 	console.log('--------Current Information end -------')
 
- 	console.log('--------start server begin -------')
-
- 	console.log('--------create http server -------')
  	http.createServer(function (request, response) {
- 		  console.log('--------recevice request bengin -------')
- 		  //console.log(request)
- 		  console.log(request.url)
- 		  console.log('--------recevice request end -------')
-
- 		  const { headers, method, url } = request;
-		  let body = [];
-		  request.on('error', (err) => {
-		    console.error(err);
-		  }).on('data', (chunk) => {
-		    body.push(chunk);
-		  }).on('end', () => {
-		    body = Buffer.concat(body).toString();
- 			console.log('--------recevice body bengin -------')
-		 	console.log(body);
- 			console.log('--------recevice body end -------')
-			response.writeHead(200, {'Content-Type': 'text/plain'});
-			response.end(contentText);
-		  });
+ 		handle_respone(request, response, port);
 	}).listen(port);
 
-	console.log('--------create http server at http://127.0.0.1:8890/-------')
- 	console.log('--------start server end -------')
+	console.log('--------create http server at http://127.0.0.1:%d/-------', port)
 }
 
 
